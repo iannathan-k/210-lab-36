@@ -1,35 +1,29 @@
 #include <iostream>
+#include <fstream>
+#include <string>
 #include "StrBinaryTree.h"
 using namespace std;
 
 // COMSC-210 | Lab 36 | Ian Kusmiantoro
 
 int main() {
+    ifstream fin;
+    fin.open("codes.txt");
 
-    // Testing the tree stuff
+    if (!fin.good()) {
+        cout << "Error in opening file!" << endl;
+        return 1;
+    }
+
     StrBinaryTree tree = StrBinaryTree();
-    tree.insertNode("Alice");
-    tree.insertNode("Bob");
-    tree.insertNode("Eve");
-    tree.insertNode("Able");
-    tree.insertNode("Baker");
+    string code; // This is possible because codes have no newlines or spaces
+    while (fin >> code) {
+        tree.insertNode(code);
+    }
 
-    cout << "Inorder Traversal" << endl;
-    tree.displayInOrder();
-    cout << endl;
-
-    tree.remove("Bob");
-    cout << "Preorder Traversal" << endl;
-    tree.displayPreOrder();
-    cout << endl;
-
-    cout << "Inorder Traversal" << endl;
-    tree.remove("Able");
-    tree.remove("Alice");
     tree.displayInOrder();
 
-    cout << tree.searchNode("Eve") << endl;
-    cout << tree.searchNode("Alice") << endl;
+    fin.close();
 
     return 0;
 }
